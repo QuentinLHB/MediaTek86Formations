@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.mediatek86formations" >
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.MediaTek86Formations"
+        android:usesCleartextTraffic="true" >
+        <activity
+            android:name=".vue.VideoActivity"
+            android:configChanges="orientation|screenSize"
+            android:theme="@style/Theme.AppCompat.NoActionBar"
+            android:exported="false"
+            android:parentActivityName=".vue.UneFormationActivity" />
+        <activity
+            android:name=".vue.UneFormationActivity"
+            android:exported="false"
+            android:parentActivityName=".vue.FormationsActivity" />
+        <activity
+            android:name=".vue.FormationsActivity"
+            android:exported="false"
+            android:parentActivityName=".vue.MainActivity" />
+        <activity
+            android:name=".vue.MainActivity"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>
