@@ -82,4 +82,15 @@ public class Controle {
         return accesLocal.existe(formation);
     }
 
+    public ArrayList<Formation> getFavoris(){
+        ArrayList<Formation> lesFavoris = new ArrayList<>();
+        ArrayList<Integer> lesIdsFavoris = accesLocal.getIdsFavoris();
+        for(Formation formation : lesFormations){
+            if(lesIdsFavoris.contains(formation.getId())){
+                lesFavoris.add(formation);
+            }
+        }
+        return lesFavoris;
+    }
+
 }
