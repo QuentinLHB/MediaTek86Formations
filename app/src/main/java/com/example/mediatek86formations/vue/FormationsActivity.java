@@ -36,14 +36,28 @@ public class FormationsActivity extends AppCompatActivity {
         controle = Controle.getInstance();
         btnFiltrer = (Button) findViewById(R.id.btnFiltrer);
         txtFiltre = (EditText) findViewById(R.id.txtFiltre);
-        creerListe();
+        creerListe(controle.getLesFormations());
+
+        btnFiltrer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ArrayList<Formation> lesFormations;
+                if(txtFiltre.getText().toString().isEmpty()){
+                    lesFormations = controle.getLesFormations();
+
+                }else{
+                    lesFormations = controle.getLesFormationFiltre(txtFiltre.getText().toString());
+                }
+
+                creerListe(lesFormations);
+            }
+        });
     }
 
     /**
      * création de la liste adapter
      */
-    private void creerListe(){
-        ArrayList<Formation> lesFormations = controle.getLesFormations();
+    private void creerListe(ArrayList<Formation> lesFormations){
         if(lesFormations != null){
             Collections.sort(lesFormations, Collections.<Formation>reverseOrder());
             ListView listView = (ListView)findViewById(R.id.lstFormations);
