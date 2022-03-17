@@ -60,7 +60,7 @@ public class FormationListAdapter extends BaseAdapter {
     }
 
     /**
-     * Cobstruction de la ligne
+     * Construction de la ligne
      *
      * @param position
      * @param view
@@ -69,74 +69,57 @@ public class FormationListAdapter extends BaseAdapter {
      */
     @Override
     public View getView(int position, View view, ViewGroup parent) {
-//        Formation laFormation = (Formation) getItem(position);
         ViewProperties viewProperties;
         if (view == null) {
             viewProperties = new ViewProperties();
             view = inflater.inflate(R.layout.layout_liste_formations, null);
-            viewProperties.txtListeTitle = (TextView) view.findViewById(R.id.txtListTitle);
-            viewProperties.txtListPublishedAt = (TextView) view.findViewById(R.id.txtListPublishedAt);
-            viewProperties.btnListFavori = (ImageButton) view.findViewById(R.id.btnListFavori);
+            viewProperties.txtListeTitle = view.findViewById(R.id.txtListTitle);
+            viewProperties.txtListPublishedAt = view.findViewById(R.id.txtListPublishedAt);
+            viewProperties.btnListFavori = view.findViewById(R.id.btnListFavori);
 
 
             view.setTag(viewProperties);
         } else {
             viewProperties = (ViewProperties) view.getTag();
         }
-        setBtnFavoriOnClickListener(viewProperties, lesFormations.get(position));
+        setBtnFavoriOnClickListener(viewProperties.btnListFavori, lesFormations.get(position));
         viewProperties.txtListeTitle.setText(lesFormations.get(position).getTitle());
         viewProperties.txtListPublishedAt.setText(lesFormations.get(position).getPublishedAtToString());
         viewProperties.txtListeTitle.setTag(position);
-        viewProperties.txtListeTitle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ouvrirUneFormationActivity(v);
-            }
-        });
+        viewProperties.txtListeTitle.setOnClickListener(this::ouvrirUneFormationActivity);
         viewProperties.txtListPublishedAt.setTag(position);
-        viewProperties.txtListPublishedAt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ouvrirUneFormationActivity(v);
-            }
-        });
-        int img;
-        if (controle.estFavori(lesFormations.get(position))) {
-            img = R.drawable.coeur_rouge;
-        } else {
-            img = R.drawable.coeur_gris;
-        }
+        viewProperties.txtListPublishedAt.setOnClickListener(this::ouvrirUneFormationActivity);
+        int img = controle.estFavori(lesFormations.get(position)) ? R.drawable.coeur_rouge : R.drawable.coeur_gris;
         viewProperties.btnListFavori.setImageResource(img);
         return view;
     }
 
-    private void setBtnFavoriOnClickListener(ViewProperties viewProperties, Formation formation){
+    /**
+     * Applique la procédure évenementielle selon le contexte : Ajout ou suppression de favoris.
+     * @param btnFavori Bouton favori de la ligne.
+     * @param formation Formation de la ligne.
+     */
+    private void setBtnFavoriOnClickListener(ImageButton btnFavori, Formation formation){
         if(controle.isNavigFavoris()){
-            viewProperties.btnListFavori.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    controle.supprimeDesFavoris(formation);
-                    lesFormations.remove(formation);
-                    notifyDataSetChanged();
-                }
+            btnFavori.setOnClickListener(view -> {
+                controle.supprimeDesFavoris(formation);
+                lesFormations.remove(formation);
+                notifyDataSetChanged();
             });
         }
         else{
-            viewProperties.btnListFavori.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    int img;
-                    if (controle.estFavori(formation)) {
-                        controle.supprimeDesFavoris(formation);
-                        img = R.drawable.coeur_gris;
+            btnFavori.setOnClickListener(view -> {
+                int img;
+                if (controle.estFavori(formation)) {
+                    controle.supprimeDesFavoris(formation);
+                    img = R.drawable.coeur_gris;
 
-                    } else {
-                        controle.metEnFavori(formation);
-                        img = R.drawable.coeur_rouge;
-                    }
-                    viewProperties.btnListFavori.setImageResource(img);
-                    notifyDataSetChanged();
+                } else {
+                    controle.metEnFavori(formation);
+                    img = R.drawable.coeur_rouge;
                 }
+                btnFavori.setImageResource(img);
+                notifyDataSetChanged();
             });
         }
     }
@@ -156,7 +139,7 @@ public class FormationListAdapter extends BaseAdapter {
     /**
      * Propriétés de la ligne
      */
-    private class ViewProperties {
+    private static class ViewProperties {
         ImageButton btnListFavori;
         TextView txtListPublishedAt;
         TextView txtListeTitle;
