@@ -16,6 +16,16 @@ public class Controle {
     private Formation formation = null;
     private static AccesLocal accesLocal;
 
+    public boolean isNavigFavoris() {
+        return navigFavoris;
+    }
+
+    public void setNavigFavoris(boolean navigFavoris) {
+        this.navigFavoris = navigFavoris;
+    }
+
+    private boolean navigFavoris = false;
+
     /**
      * constructeur privé
      */
@@ -56,7 +66,15 @@ public class Controle {
      * @param filtre
      * @return
      */
-    public ArrayList<Formation> getLesFormationFiltre(String filtre) {
+//    public ArrayList<Formation> getLesFormationFiltre(String filtre) {
+//        return filtreFormations(this.lesFormations, filtre);
+//    }
+//
+//    public ArrayList<Formation> getFavorisFiltres(String filtre){
+//        return filtreFormations(getFavoris(), filtre);
+//    }
+
+    public ArrayList<Formation> filtreFormations(ArrayList<Formation> lesFormations, String filtre){
         ArrayList<Formation> lesFormationsFiltre = new ArrayList<>();
         for (Formation uneFormation : lesFormations) {
             if (uneFormation.getTitle().toUpperCase().contains(filtre.toUpperCase())) {
@@ -70,11 +88,11 @@ public class Controle {
         this.lesFormations = lesFormations;
     }
 
-    public void mettreEnFavori(Formation formation) {
+    public void metEnFavori(Formation formation) {
         accesLocal.ajout(formation);
     }
 
-    public void enleverDesFavoris(Formation formation){
+    public void supprimeDesFavoris(Formation formation){
         accesLocal.suppr(formation);
     }
 

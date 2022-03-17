@@ -2,7 +2,6 @@ package com.example.mediatek86formations.vue;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -70,7 +69,7 @@ public class FormationListAdapter extends BaseAdapter {
      */
     @Override
     public View getView(int position, View view, ViewGroup parent) {
-        Formation laFormation = lesFormations.get(position);
+//        Formation laFormation = (Formation) getItem(position);
         ViewProperties viewProperties;
         if (view == null) {
             viewProperties = new ViewProperties();
@@ -78,33 +77,13 @@ public class FormationListAdapter extends BaseAdapter {
             viewProperties.txtListeTitle = (TextView) view.findViewById(R.id.txtListTitle);
             viewProperties.txtListPublishedAt = (TextView) view.findViewById(R.id.txtListPublishedAt);
             viewProperties.btnListFavori = (ImageButton) view.findViewById(R.id.btnListFavori);
-            int img;
-            if (controle.estFavori(laFormation)) {
-                img = R.drawable.coeur_rouge;
-            } else {
-                img = R.drawable.coeur_gris;
-            }
-            viewProperties.btnListFavori.setImageResource(img);
-            viewProperties.btnListFavori.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    int img;
-                    if (controle.estFavori(laFormation)) {
-                        controle.enleverDesFavoris(laFormation);
-                        img = R.drawable.coeur_gris;
 
-                    } else {
-                        controle.mettreEnFavori(laFormation);
-                        img = R.drawable.coeur_rouge;
-                    }
-                    viewProperties.btnListFavori.setImageResource(img);
-                    notifyDataSetChanged();
-                }
-            });
+
             view.setTag(viewProperties);
         } else {
             viewProperties = (ViewProperties) view.getTag();
         }
+        setBtnFavoriOnClickListener(viewProperties, lesFormations.get(position));
         viewProperties.txtListeTitle.setText(lesFormations.get(position).getTitle());
         viewProperties.txtListPublishedAt.setText(lesFormations.get(position).getPublishedAtToString());
         viewProperties.txtListeTitle.setTag(position);
@@ -121,7 +100,45 @@ public class FormationListAdapter extends BaseAdapter {
                 ouvrirUneFormationActivity(v);
             }
         });
+        int img;
+        if (controle.estFavori(lesFormations.get(position))) {
+            img = R.drawable.coeur_rouge;
+        } else {
+            img = R.drawable.coeur_gris;
+        }
+        viewProperties.btnListFavori.setImageResource(img);
         return view;
+    }
+
+    private void setBtnFavoriOnClickListener(ViewProperties viewProperties, Formation formation){
+        if(controle.isNavigFavoris()){
+            viewProperties.btnListFavori.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    controle.supprimeDesFavoris(formation);
+                    lesFormations.remove(formation);
+                    notifyDataSetChanged();
+                }
+            });
+        }
+        else{
+            viewProperties.btnListFavori.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int img;
+                    if (controle.estFavori(formation)) {
+                        controle.supprimeDesFavoris(formation);
+                        img = R.drawable.coeur_gris;
+
+                    } else {
+                        controle.metEnFavori(formation);
+                        img = R.drawable.coeur_rouge;
+                    }
+                    viewProperties.btnListFavori.setImageResource(img);
+                    notifyDataSetChanged();
+                }
+            });
+        }
     }
 
     /**

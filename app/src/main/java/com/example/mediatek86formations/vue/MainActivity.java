@@ -32,7 +32,9 @@ public class MainActivity extends AppCompatActivity {
      * appelle les procédures événementielles pour gérer le menu
      */
     private void creerMenu(){
-        ecouteMenu((ImageButton)findViewById(R.id.btnFormations), FormationsActivity.class);
+        ecouteMenu((ImageButton)findViewById(R.id.btnFormations), FormationsActivity.class, false);
+        ecouteMenu((ImageButton)findViewById(R.id.btnFavoris), FormationsActivity.class, true);
+
     }
 
     /**
@@ -40,10 +42,11 @@ public class MainActivity extends AppCompatActivity {
      * @param btn
      * @param classe
      */
-    private void ecouteMenu(ImageButton btn, final Class classe){
+    private void ecouteMenu(ImageButton btn, final Class classe, boolean navigFavoris){
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Controle.getInstance(MainActivity.this).setNavigFavoris(navigFavoris);
                 Activity activity = MainActivity.this;
                 Intent intent = new Intent(activity, classe);
                 activity.startActivity(intent);

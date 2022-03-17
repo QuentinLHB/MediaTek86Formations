@@ -21,10 +21,12 @@ public class FormationsActivity extends AppCompatActivity {
     private Controle controle;
     private Button btnFiltrer;
     private EditText txtFiltre;
+    private ArrayList<Formation> lesFormations;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        controle = Controle.getInstance(FormationsActivity.this);
         setContentView(R.layout.activity_formations);
         init();
     }
@@ -33,25 +35,32 @@ public class FormationsActivity extends AppCompatActivity {
      * initialisations
      */
     private void init(){
+        if(controle.isNavigFavoris()){
+            lesFormations = controle.getFavoris();
+        }else{
+            lesFormations = controle.getLesFormations();
+        }
+
         controle = Controle.getInstance(FormationsActivity.this);
         btnFiltrer = (Button) findViewById(R.id.btnFiltrer);
         txtFiltre = (EditText) findViewById(R.id.txtFiltre);
-        creerListe(controle.getLesFormations());
+        creerListe(lesFormations);
 
         btnFiltrer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ArrayList<Formation> lesFormations;
+                // Pas de filtre : Toutes les entrées (toutes le formations ou tous les favs
                 if(txtFiltre.getText().toString().isEmpty()){
-                    lesFormations = controle.getLesFormations();
-
-                }else{
-                    lesFormations = controle.getLesFormationFiltre(txtFiltre.getText().toString());
+                    creerListe(lesFormations);
                 }
-
-                creerListe(lesFormations);
+                // Filtre
+                else{
+                    creerListe(controle.filtreFormations(lesFormations, txtFiltre.getText().toString()));
+                }
+                btnFiltrer.requestFocus();
             }
         });
+        btnFiltrer.requestFocus();
     }
 
     /**

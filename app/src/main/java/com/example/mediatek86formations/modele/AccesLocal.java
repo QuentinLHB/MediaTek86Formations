@@ -38,6 +38,10 @@ public class AccesLocal {
     }
 
     public boolean existe(Formation formation){
+        if(formation.getId() == 10){
+            int a = 1;
+        }
+//        System.out.println(formation.getTitle() + " : " + formation.getId());
         bd = accesBD.getReadableDatabase();
         Cursor curseur = bd.query("favoris",
                 null,
@@ -45,12 +49,14 @@ public class AccesLocal {
                 new String[]{String.valueOf(formation.getId())},
                 null, null, null);
         boolean existe = !curseur.isAfterLast();
+        if(existe) System.out.println("Devrait être un fav :" + formation.getTitle() + " : " + formation.getId());
         curseur.close();
         return existe;
     }
 
     public ArrayList<Integer> getIdsFavoris(){
         ArrayList<Integer> lesFavoris = new ArrayList<>();
+        bd = accesBD.getReadableDatabase();
         String req = "SELECT * FROM favoris";
         Cursor curseur = bd.rawQuery(req, null);
         if(!curseur.moveToFirst()) return lesFavoris;
