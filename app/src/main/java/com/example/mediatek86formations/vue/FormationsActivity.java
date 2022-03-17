@@ -33,7 +33,7 @@ public class FormationsActivity extends AppCompatActivity {
      * initialisations
      */
     private void init(){
-        controle = Controle.getInstance();
+        controle = Controle.getInstance(FormationsActivity.this);
         btnFiltrer = (Button) findViewById(R.id.btnFiltrer);
         txtFiltre = (EditText) findViewById(R.id.txtFiltre);
         creerListe(controle.getLesFormations());

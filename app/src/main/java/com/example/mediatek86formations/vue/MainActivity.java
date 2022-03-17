@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
      * initialisations
      */
     private void init(){
-        Controle.getInstance();
+        Controle.getInstance(MainActivity.this);
         creerMenu();
     }
 

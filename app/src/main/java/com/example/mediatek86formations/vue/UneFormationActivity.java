@@ -29,7 +29,7 @@ public class UneFormationActivity extends AppCompatActivity {
      * Remplissage des objets graphiques
      */
     private void init(){
-        Controle controle = Controle.getInstance();
+        Controle controle = Controle.getInstance(UneFormationActivity.this);
         TextView txtPublishedAt = (TextView) findViewById(R.id.txtPublishedAt);
         TextView txtTitle = (TextView) findViewById(R.id.txtTitle);
         TextView txtDescription = (TextView) findViewById(R.id.txtDescription);
