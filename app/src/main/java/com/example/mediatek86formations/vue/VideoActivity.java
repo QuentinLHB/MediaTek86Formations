@@ -1,11 +1,10 @@
 package com.example.mediatek86formations.vue;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.mediatek86formations.R;
 import com.example.mediatek86formations.controleur.Controle;

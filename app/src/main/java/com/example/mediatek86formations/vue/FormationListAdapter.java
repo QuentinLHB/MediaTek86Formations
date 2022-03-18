@@ -13,20 +13,20 @@ import com.example.mediatek86formations.R;
 import com.example.mediatek86formations.controleur.Controle;
 import com.example.mediatek86formations.modele.Formation;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class FormationListAdapter extends BaseAdapter {
 
-    private ArrayList<Formation> lesFormations;
-    private LayoutInflater inflater;
-    private Controle controle;
-    private Context context;
+    private final List<Formation> lesFormations;
+    private final LayoutInflater inflater;
+    private final Controle controle;
+    private final Context context;
 
     /**
-     * @param lesFormations
-     * @param context
+     * @param lesFormations Liste de formations à afficher.
+     * @param context Contexte
      */
-    public FormationListAdapter(ArrayList<Formation> lesFormations, Context context) {
+    public FormationListAdapter(List<Formation> lesFormations, Context context) {
         this.lesFormations = lesFormations;
         this.controle = Controle.getInstance(context);
         this.context = context;
@@ -62,10 +62,10 @@ public class FormationListAdapter extends BaseAdapter {
     /**
      * Construction de la ligne
      *
-     * @param position
-     * @param view
-     * @param parent
-     * @return
+     * @param position Position dans la liste.
+     * @param view Vue
+     * @param parent Parent
+     * @return Vue
      */
     @Override
     public View getView(int position, View view, ViewGroup parent) {
@@ -127,7 +127,7 @@ public class FormationListAdapter extends BaseAdapter {
     /**
      * Ouvre la page du détail de la formation
      *
-     * @param v
+     * @param v Vue
      */
     private void ouvrirUneFormationActivity(View v) {
         int indice = (int) v.getTag();

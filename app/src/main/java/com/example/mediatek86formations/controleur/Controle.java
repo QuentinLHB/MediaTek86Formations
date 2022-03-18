@@ -6,8 +6,8 @@ import com.example.mediatek86formations.modele.AccesDistant;
 import com.example.mediatek86formations.modele.AccesLocal;
 import com.example.mediatek86formations.modele.Formation;
 
-import java.text.Normalizer;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Contrôleur de l'application.
@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class Controle {
 
     private static Controle instance = null;
-    private ArrayList<Formation> lesFormations = new ArrayList<>();
+    private List<Formation> lesFormations = new ArrayList<>();
     private static AccesLocal accesLocal;
 
     /**
@@ -30,7 +30,7 @@ public class Controle {
      *
      * @return instance
      */
-    public static final Controle getInstance(Context context) {
+    public static Controle getInstance(Context context) {
         if (Controle.instance == null) {
             Controle.instance = new Controle();
             AccesDistant accesDistant = new AccesDistant();
@@ -45,7 +45,7 @@ public class Controle {
      *
      * @param lesFormations Liste de formations.
      */
-    public void setLesFormations(ArrayList<Formation> lesFormations) {
+    public void setLesFormations(List<Formation> lesFormations) {
         this.lesFormations = lesFormations;
     }
 
@@ -54,7 +54,7 @@ public class Controle {
      *
      * @return Liste de formations.
      */
-    public ArrayList<Formation> getLesFormations() {
+    public List<Formation> getLesFormations() {
         return lesFormations;
     }
 
@@ -65,7 +65,7 @@ public class Controle {
      * @param filtre        Element à filtrer.
      * @return Liste de formations filtrées.
      */
-    public ArrayList<Formation> filtreFormations(ArrayList<Formation> lesFormations, String filtre) {
+    public List<Formation> filtreFormations(List<Formation> lesFormations, String filtre) {
         ArrayList<Formation> lesFormationsFiltre = new ArrayList<>();
         for (Formation uneFormation : lesFormations) {
             if (uneFormation.getTitle().toUpperCase().contains(filtre.toUpperCase())) {
@@ -78,7 +78,7 @@ public class Controle {
     /**
      * Met un formation en favori dans la bdd locale.
      *
-     * @param formation
+     * @param formation Formation à ajouter aux favoris.
      */
     public void metEnFavori(Formation formation) {
         accesLocal.ajout(formation);
@@ -87,7 +87,7 @@ public class Controle {
     /**
      * Supprime une formation des favoris de la bdd locale.
      *
-     * @param formation
+     * @param formation Formation à supprimer des favoris.
      */
     public void supprimeDesFavoris(Formation formation) {
         accesLocal.suppr(formation);
@@ -108,12 +108,12 @@ public class Controle {
      *
      * @return Liste des formations favorites.
      */
-    public ArrayList<Formation> getFavoris() {
-        ArrayList<Formation> lesFavoris = new ArrayList<>();
-        ArrayList<Integer> lesIdsFavoris = accesLocal.getIdsFavoris();
-        for (Formation formation : lesFormations) {
-            if (lesIdsFavoris.contains(formation.getId())) {
-                lesFavoris.add(formation);
+    public List<Formation> getFavoris() {
+        List<Formation> lesFavoris = new ArrayList<>();
+        List<Integer> lesIdsFavoris = accesLocal.getIdsFavoris();
+        for (Formation uneFormation : lesFormations) {
+            if (lesIdsFavoris.contains(uneFormation.getId())) {
+                lesFavoris.add(uneFormation);
             }
         }
         return lesFavoris;

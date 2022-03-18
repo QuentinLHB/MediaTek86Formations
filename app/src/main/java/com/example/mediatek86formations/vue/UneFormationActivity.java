@@ -1,18 +1,17 @@
 package com.example.mediatek86formations.vue;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.widget.ImageButton;
+import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.mediatek86formations.R;
 import com.example.mediatek86formations.controleur.Controle;
 import com.example.mediatek86formations.modele.Formation;
 import com.example.mediatek86formations.outils.MesOutils;
-
-import android.app.Activity;
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.ImageButton;
-import android.widget.TextView;
-import android.widget.Toast;
 
 public class UneFormationActivity extends AppCompatActivity {
 
@@ -30,10 +29,10 @@ public class UneFormationActivity extends AppCompatActivity {
      */
     private void init(){
         Controle controle = Controle.getInstance(UneFormationActivity.this);
-        TextView txtPublishedAt = (TextView) findViewById(R.id.txtPublishedAt);
-        TextView txtTitle = (TextView) findViewById(R.id.txtTitle);
-        TextView txtDescription = (TextView) findViewById(R.id.txtDescription);
-        btnPicture = (ImageButton) findViewById(R.id.btnPicture);
+        TextView txtPublishedAt = findViewById(R.id.txtPublishedAt);
+        TextView txtTitle = findViewById(R.id.txtTitle);
+        TextView txtDescription = findViewById(R.id.txtDescription);
+        btnPicture = findViewById(R.id.btnPicture);
         Formation formation = controle.getFormation();
         if(formation!=null) {
             txtPublishedAt.setText(formation.getPublishedAtToString());
@@ -48,13 +47,10 @@ public class UneFormationActivity extends AppCompatActivity {
      * Procédure événementielle sur le clic du bouton btnPicture
      */
     private void ecouteBtnPicture(){
-        btnPicture.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Activity activity = UneFormationActivity.this;
-                Intent intent = new Intent(activity, VideoActivity.class);
-                activity.startActivity(intent);
-            }
+        btnPicture.setOnClickListener(v -> {
+            Activity activity = UneFormationActivity.this;
+            Intent intent = new Intent(activity, VideoActivity.class);
+            activity.startActivity(intent);
         });
     }
 

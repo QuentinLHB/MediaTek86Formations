@@ -8,21 +8,23 @@ import android.database.sqlite.SQLiteDatabase;
 import com.example.mediatek86formations.outils.MySQLiteOpenHelper;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Classe permettant d'effectuer des actions sur la base de donnée locale SQLite de l'application.
  */
 public class AccesLocal {
-    private String nomBase = "bdMediatek.sqlite";
-    private Integer versionBase = 1;
-    private MySQLiteOpenHelper accesBD;
+    private final MySQLiteOpenHelper accesBD;
     private SQLiteDatabase bd;
+    private static final String TABLEFAVORIS = "favoris";
 
     /**
      * constructeur : valorise l'accès à la BDD
-     * @param context
+     * @param context Contexte
      */
     public AccesLocal(Context context){
+        String nomBase = "bdMediatek.sqlite";
+        int versionBase = 1;
         accesBD = new MySQLiteOpenHelper(context, nomBase, versionBase);
     }
 
@@ -34,7 +36,7 @@ public class AccesLocal {
         bd = accesBD.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("idformation", formation.getId());
-        bd.insert("favoris", null, values);
+        bd.insert(TABLEFAVORIS, null, values);
         bd.close();
     }
 
@@ -44,7 +46,7 @@ public class AccesLocal {
      */
     public void suppr(Formation formation){
         bd = accesBD.getWritableDatabase();
-        bd.delete("favoris", "idformation" + "=?" , new String[]{String.valueOf(formation.getId())});
+        bd.delete(TABLEFAVORIS, "idformation" + "=?" , new String[]{String.valueOf(formation.getId())});
         bd.close();
     }
 
@@ -55,7 +57,7 @@ public class AccesLocal {
      */
     public boolean existe(Formation formation){
         bd = accesBD.getReadableDatabase();
-        Cursor curseur = bd.query("favoris",
+        Cursor curseur = bd.query(TABLEFAVORIS,
                 null,
                 "idformation =?",
                 new String[]{String.valueOf(formation.getId())},
@@ -69,7 +71,7 @@ public class AccesLocal {
      * Récupère les identifiants dans la bdd, qui correspondent aux id des formations favorites.
      * @return Liste d'integer représentant les identifiants.
      */
-    public ArrayList<Integer> getIdsFavoris(){
+    public List<Integer> getIdsFavoris(){
         ArrayList<Integer> lesFavoris = new ArrayList<>();
         bd = accesBD.getReadableDatabase();
         String req = "SELECT * FROM favoris";

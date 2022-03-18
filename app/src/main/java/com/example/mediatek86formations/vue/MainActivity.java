@@ -1,12 +1,11 @@
 package com.example.mediatek86formations.vue;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageButton;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.mediatek86formations.R;
 import com.example.mediatek86formations.controleur.Controle;
@@ -32,25 +31,21 @@ public class MainActivity extends AppCompatActivity {
      * appelle les procédures événementielles pour gérer le menu
      */
     private void creerMenu(){
-        ecouteMenu((ImageButton)findViewById(R.id.btnFormations), FormationsActivity.class, false);
-        ecouteMenu((ImageButton)findViewById(R.id.btnFavoris), FormationsActivity.class, true);
-
+        ecouteMenu(findViewById(R.id.btnFormations), false);
+        ecouteMenu(findViewById(R.id.btnFavoris), true);
     }
 
     /**
      * procédure événementielle sur le clic d'une image du menu
-     * @param btn
-     * @param classe
+     * @param btn Button sur lequel ajouter un évènement.
+     * @param navigFavoris True si l'utilisateur va parcourir les favoris.
      */
-    private void ecouteMenu(ImageButton btn, final Class classe, boolean navigFavoris){
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Controle.getInstance(MainActivity.this).setNavigFavoris(navigFavoris);
-                Activity activity = MainActivity.this;
-                Intent intent = new Intent(activity, classe);
-                activity.startActivity(intent);
-            }
+    private void ecouteMenu(ImageButton btn, boolean navigFavoris){
+        btn.setOnClickListener(v -> {
+            Controle.getInstance(MainActivity.this).setNavigFavoris(navigFavoris);
+            Activity activity = MainActivity.this;
+            Intent intent = new Intent(activity, FormationsActivity.class);
+            activity.startActivity(intent);
         });
     }
 
