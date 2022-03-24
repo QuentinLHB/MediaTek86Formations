@@ -1,13 +1,16 @@
 package com.example.mediatek86formations.vue;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.mediatek86formations.R;
+import com.example.mediatek86formations.*;
 import com.example.mediatek86formations.controleur.Controle;
 import com.example.mediatek86formations.modele.Formation;
 
@@ -52,7 +55,11 @@ public class FormationsActivity extends AppCompatActivity {
             else{
                 creerListe(controle.filtreFormations(lesFormations, txtFiltre.getText().toString()));
             }
-            btnFiltrer.requestFocus();
+            View vue = this.getCurrentFocus();
+            if (vue != null) {
+                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+            }
         });
         btnFiltrer.requestFocus();
     }
