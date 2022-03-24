@@ -9,3 +9,5 @@ y
 Iapp/src/main/java/com/example/mediatek86formations/modele/AccesLocal.java,b\1\b1aa7d22aaa1e0af007a92dc176db9804cfb5164
 @
 app/build.gradle,f\4\f4a01d6a4fcb971362ec00a83903fd3902f52164
+{
+Kapp/src/main/java/com/example/mediatek86formations/controleur/Controle.java,4\1\411ec703a736bb4ecfea71617fda81e4b27c24b2

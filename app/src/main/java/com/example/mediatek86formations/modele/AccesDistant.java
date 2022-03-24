@@ -16,7 +16,7 @@ import java.util.Date;
 
 public class AccesDistant implements AsyncResponse {
 
-    private static final String SERVERADDR = "http://192.168.1.78/rest_mediatek86formations/";
+    private static final String SERVERADDR = "http://170.187.186.244/rest_mediatek86formations/";
     private final Controle controle;
 
     /**
