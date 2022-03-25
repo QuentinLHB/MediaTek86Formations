@@ -3,6 +3,14 @@ plugins {
 }
 
 android {
+    signingConfigs {
+        release {
+            storeFile file('my-release-key.keystore')
+            storePassword 'mediatek86'
+            keyAlias 'alias_name'
+            keyPassword 'mediatek86'
+        }
+    }
     compileSdk 32
 
     defaultConfig {
@@ -19,6 +27,10 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+        debug {
+            debuggable true
         }
     }
     compileOptions {

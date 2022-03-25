@@ -6,13 +6,13 @@ import java.util.Date;
 
 public class Formation implements Comparable {
 
-    private int id;
-    private Date publishedAt;
-    private String title;
-    private String description;
-    private String miniature;
-    private String picture;
-    private String videoId;
+    private final int id;
+    private final Date publishedAt;
+    private final String title;
+    private final String description;
+    private final String miniature;
+    private final String picture;
+    private final String videoId;
 
     public Formation(int id, Date publishedAt, String title, String description, String miniature, String picture, String videoId) {
         this.id = id;
@@ -64,5 +64,4 @@ public class Formation implements Comparable {
     public int compareTo(Object o) {
         return publishedAt.compareTo(((Formation)o).getPublishedAt());
     }
-
 }

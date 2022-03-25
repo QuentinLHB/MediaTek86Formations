@@ -20,9 +20,10 @@ public class AccesLocal {
 
     /**
      * constructeur : valorise l'accès à la BDD
+     *
      * @param context Contexte
      */
-    public AccesLocal(Context context){
+    public AccesLocal(Context context) {
         String nomBase = "bdMediatek.sqlite";
         int versionBase = 1;
         accesBD = new MySQLiteOpenHelper(context, nomBase, versionBase);
@@ -30,9 +31,10 @@ public class AccesLocal {
 
     /**
      * Ajoute une formation à la base de données.
+     *
      * @param formation Formation à ajouter.
      */
-    public void ajout(Formation formation){
+    public void ajout(Formation formation) {
         bd = accesBD.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("idformation", formation.getId());
@@ -42,20 +44,30 @@ public class AccesLocal {
 
     /**
      * Supprime une formation de la base de données.
+     *
      * @param formation Formation à supprimer.
      */
-    public void suppr(Formation formation){
+    public void suppr(Formation formation) {
+        suppr(formation.getId());
+    }
+
+    /**
+     * Supprime une formation de la base de données.
+     * @param idFormation Id de la formation à supprimer.
+     */
+    public void suppr(Integer idFormation) {
         bd = accesBD.getWritableDatabase();
-        bd.delete(TABLEFAVORIS, "idformation" + "=?" , new String[]{String.valueOf(formation.getId())});
+        bd.delete(TABLEFAVORIS, "idformation" + "=?", new String[]{String.valueOf(idFormation)});
         bd.close();
     }
 
     /**
      * Vérifie si une formation existe dans la base de données.
+     *
      * @param formation Formation dont on vérifie l'existance.
      * @return true si elle existe dans la bdd, false sinon.
      */
-    public boolean existe(Formation formation){
+    public boolean existe(Formation formation) {
         bd = accesBD.getReadableDatabase();
         Cursor curseur = bd.query(TABLEFAVORIS,
                 null,
@@ -69,15 +81,16 @@ public class AccesLocal {
 
     /**
      * Récupère les identifiants dans la bdd, qui correspondent aux id des formations favorites.
+     *
      * @return Liste d'integer représentant les identifiants.
      */
-    public List<Integer> getIdsFavoris(){
+    public List<Integer> getIdsFavoris() {
         ArrayList<Integer> lesFavoris = new ArrayList<>();
         bd = accesBD.getReadableDatabase();
         String req = "SELECT * FROM favoris";
         Cursor curseur = bd.rawQuery(req, null);
-        if(!curseur.moveToFirst()) return lesFavoris;
-        while (!curseur.isAfterLast()){
+        if (!curseur.moveToFirst()) return lesFavoris;
+        while (!curseur.isAfterLast()) {
             lesFavoris.add(curseur.getInt(0));
             curseur.moveToNext();
         }
