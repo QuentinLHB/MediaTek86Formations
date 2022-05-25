@@ -28,8 +28,7 @@ public class VideoActivity extends AppCompatActivity {
      * Affichage  de la vidéo
      */
     private void init(){
-        Controle controle = Controle.getInstance(VideoActivity.this);
-        Formation formation = controle.getFormation();
+        Formation formation = (Formation) getIntent().getSerializableExtra("formation");
         if(formation!=null) {
             wbvYoutube = findViewById(R.id.wbvYoutube);
             wbvYoutube.getSettings().setJavaScriptEnabled(true);

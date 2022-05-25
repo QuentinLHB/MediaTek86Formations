@@ -38,13 +38,13 @@ public class MainActivity extends AppCompatActivity {
     /**
      * procédure événementielle sur le clic d'une image du menu
      * @param btn Button sur lequel ajouter un évènement.
-     * @param navigFavoris True si l'utilisateur va parcourir les favoris.
+     * @param iNavigFavoris True si l'utilisateur va parcourir les favoris.
      */
-    private void ecouteMenu(ImageButton btn, boolean navigFavoris){
+    private void ecouteMenu(ImageButton btn, boolean iNavigFavoris){
         btn.setOnClickListener(v -> {
-            Controle.getInstance(MainActivity.this).setNavigFavoris(navigFavoris);
             Activity activity = MainActivity.this;
             Intent intent = new Intent(activity, FormationsActivity.class);
+            intent.putExtra("navig", iNavigFavoris);
             activity.startActivity(intent);
         });
     }

@@ -21,16 +21,19 @@ public class FormationListAdapter extends BaseAdapter {
     private final LayoutInflater inflater;
     private final Controle controle;
     private final Context context;
+    private final boolean isNavigFavoris;
 
     /**
      * @param lesFormations Liste de formations à afficher.
      * @param context Contexte
      */
-    public FormationListAdapter(List<Formation> lesFormations, Context context) {
+    public FormationListAdapter(List<Formation> lesFormations, boolean isNavigFavoris, Context context) {
         this.lesFormations = lesFormations;
         this.controle = Controle.getInstance(context);
         this.context = context;
         this.inflater = LayoutInflater.from(context);
+        this.isNavigFavoris = isNavigFavoris;
+
     }
 
     /**
@@ -100,7 +103,7 @@ public class FormationListAdapter extends BaseAdapter {
      * @param formation Formation de la ligne.
      */
     private void setBtnFavoriOnClickListener(ImageButton btnFavori, Formation formation){
-        if(controle.isNavigFavoris()){
+        if(isNavigFavoris){
             btnFavori.setOnClickListener(view -> {
                 controle.supprimeDesFavoris(formation);
                 lesFormations.remove(formation);
@@ -131,8 +134,8 @@ public class FormationListAdapter extends BaseAdapter {
      */
     private void ouvrirUneFormationActivity(View v) {
         int indice = (int) v.getTag();
-        controle.setFormation(lesFormations.get(indice));
         Intent intent = new Intent(context, UneFormationActivity.class);
+        intent.putExtra("formation", lesFormations.get(indice));
         context.startActivity(intent);
     }
 

@@ -1,6 +1,7 @@
 package com.example.mediatek86formations.vue;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -20,12 +21,15 @@ import java.util.List;
 public class FormationsActivity extends AppCompatActivity {
 
     private Controle controle;
+    boolean isNavigFavoris;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         controle = Controle.getInstance(FormationsActivity.this);
         setContentView(R.layout.activity_formations);
+        Intent intent = getIntent();
+        isNavigFavoris = intent.getBooleanExtra("navig", true);
         init();
     }
 
@@ -35,7 +39,7 @@ public class FormationsActivity extends AppCompatActivity {
     private void init(){
         List<Formation> lesFormations;
 
-        if(controle.isNavigFavoris()){
+        if(isNavigFavoris){
             lesFormations = controle.getFavoris();
         }else{
             lesFormations = controle.getLesFormations();
@@ -71,7 +75,7 @@ public class FormationsActivity extends AppCompatActivity {
         if(lesFormations != null){
             Collections.sort(lesFormations, Collections.reverseOrder());
             ListView listView = findViewById(R.id.lstFormations);
-            FormationListAdapter adapter = new FormationListAdapter(lesFormations,FormationsActivity.this);
+            FormationListAdapter adapter = new FormationListAdapter(lesFormations, isNavigFavoris,FormationsActivity.this);
             listView.setAdapter(adapter);
         }
     }

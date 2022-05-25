@@ -118,45 +118,4 @@ public class Controle {
         }
         return lesFavoris;
     }
-
-    // --------------- Elements définis durant la navigation ----------------
-    private Formation formation = null;
-    private boolean navigFavoris = false;
-
-    /**
-     * Définit la formation sélectionnée par l'utilisateur.
-     *
-     * @param formation formation cliquée par l'utilisateur.
-     */
-    public void setFormation(Formation formation) {
-        this.formation = formation;
-    }
-
-    /**
-     * Obtient la formation sélectionnée par l'utilisateur
-     *
-     * @return Formation sélectionnée.
-     */
-    public Formation getFormation() {
-        return formation;
-    }
-
-
-    /**
-     * Retourne un booléen correspondant à l'onglet actuellement navigué par l'utilisateur.
-     * @return True si l'utilisateur navigue dans les favoris, false sinon.
-     */
-    public boolean isNavigFavoris() {
-        return navigFavoris;
-    }
-
-    /**
-     * Définit un booléen en fonction de l'onglet actuellement navigué par l'utilisateur.
-     * @param navigFavoris True si l'utilisateur navigue dans les favoris, false sinon.
-     */
-    public void setNavigFavoris(boolean navigFavoris) {
-        this.navigFavoris = navigFavoris;
-    }
-
-
 }

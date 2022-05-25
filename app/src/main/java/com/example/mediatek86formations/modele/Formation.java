@@ -2,9 +2,10 @@ package com.example.mediatek86formations.modele;
 
 import com.example.mediatek86formations.outils.MesOutils;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Formation implements Comparable {
+public class Formation implements Comparable, Serializable {
 
     private final int id;
     private final Date publishedAt;

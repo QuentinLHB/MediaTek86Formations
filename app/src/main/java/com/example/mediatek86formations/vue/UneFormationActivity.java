@@ -16,6 +16,7 @@ import com.example.mediatek86formations.outils.MesOutils;
 public class UneFormationActivity extends AppCompatActivity {
 
     private ImageButton btnPicture;
+    private Formation formation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,14 +28,14 @@ public class UneFormationActivity extends AppCompatActivity {
     /**
      * Remplissage des objets graphiques
      */
-    private void init(){
-        Controle controle = Controle.getInstance(UneFormationActivity.this);
+    private void init() {
         TextView txtPublishedAt = findViewById(R.id.txtPublishedAt);
         TextView txtTitle = findViewById(R.id.txtTitle);
         TextView txtDescription = findViewById(R.id.txtDescription);
         btnPicture = findViewById(R.id.btnPicture);
-        Formation formation = controle.getFormation();
-        if(formation!=null) {
+        Intent intent = getIntent();
+        formation = (Formation) intent.getSerializableExtra("formation");
+        if (formation != null) {
             txtPublishedAt.setText(formation.getPublishedAtToString());
             txtTitle.setText(formation.getTitle());
             txtDescription.setText(formation.getDescription());
@@ -46,10 +47,11 @@ public class UneFormationActivity extends AppCompatActivity {
     /**
      * Procédure événementielle sur le clic du bouton btnPicture
      */
-    private void ecouteBtnPicture(){
+    private void ecouteBtnPicture() {
         btnPicture.setOnClickListener(v -> {
             Activity activity = UneFormationActivity.this;
             Intent intent = new Intent(activity, VideoActivity.class);
+            intent.putExtra("formation", formation);
             activity.startActivity(intent);
         });
     }
